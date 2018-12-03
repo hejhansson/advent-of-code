@@ -1,34 +1,40 @@
 const fs = require('fs')
 const _ = require('underscore')
 
-let data
 let checksum = 0
 
 fs.readFile('data.txt', (error, data) => {
-  data = data.toString().split('\n')
+  let d = data.toString().split('\n')
   
-  data.forEach((row) => {
+  // each row from input
+  d.forEach((row, index) => {
     
     let splitRow = row.split('')
     let letters = []
-
+  
+    // push each letter to array
     splitRow.forEach((letter) => {   
       letters.push(letter)
     })
 
     let counts = {}
     
+    // check for duplicates per row
     letters.forEach(function(element) {
       counts[element] = (counts[element] || 0) + 1;
     })
+
+    let countTwo = 0
+    let countThree = 0
     
     for (var element in counts) {
-      console.log(element + ' = ' + counts[element]);
-    }
+      //console.log(element + ' = ' + counts[element]);
+      if(counts[element] == 2) countTwo++
+      if(counts[element] == 3) countThree++        
+    }    
     
-
-
-    console.log('row')
+    // how many times there's twos och threes on each row
+    console.log(`row ${index}`, countTwo, countThree)
 
   })
 })
