@@ -1,4 +1,5 @@
 const fs = require('fs')
+const _ = require('underscore')
 
 let data
 let checksum = 0
@@ -15,15 +16,20 @@ fs.readFile('data.txt', (error, data) => {
       letters.push(letter)
     })
 
-    letters.sort()
+    let counts = {}
     
-    letters.forEach((sortedLetter, index) => {
-      if(sortedLetter == letters[index - 1]) checksum++  
+    letters.forEach(function(element) {
+      counts[element] = (counts[element] || 0) + 1;
     })
+    
+    for (var element in counts) {
+      console.log(element + ' = ' + counts[element]);
+    }
+    
+
+
+    console.log('row')
 
   })
-
-  console.log(checksum)
-
 })
 
