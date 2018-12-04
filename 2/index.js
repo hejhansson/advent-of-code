@@ -53,45 +53,41 @@ const partOne = () => {
 // hitta de ID som bara är skiljer med en char
 
 const partTwo = () => {
-  const getDiff = (string, diffBy) => string.split(diffBy).join('')
-
   fs.readFile('data.txt', (error, data) => {
     let d = data.toString().split('\n')
+
+    let matchingPairs = []
 
     // each row from input
     d.forEach((row, index) => {
 
-      // current row we're on as array of letters
-      const currentRow = row.split('')
+      let currentRow = row.split('')
+      let currentRowText = row
 
       // loop over each of the rows and check against currentRow
-      d.forEach((row, index) => {
+      d.forEach((row) => {
 
-        // current row in loop as letters
-        let rowToTestAgainst = row.split('')
-        let notMatching = 0
-        let currentRowToPrint = null
-
-        // main row
-        currentRow.forEach((letter, index) => {
-
-          if(rowToTestAgainst.indexOf(letter) > -1) {
-            //console.log('test', letter);
-          } else {
-            //console.log('not', letter);
-            notMatching++
-          }
+        // don't check the current row
+        if(currentRowText != row) {
           
-        })    
-        if(notMatching == 1) {
-          console.log('one', row);
+          let testingRow = row.split('')
+          let count = 0
+
+          testingRow.forEach((letter) => {
+            // letters that differ
+            (currentRow.indexOf(letter) > -1) ? '' : count++
+          })
+
+          // if only one differs
+          if(count == 1) {
+            matchingPairs.push([currentRowText, row].sort())
+          }
         }
-        //console.log(notMatching);
-
       })
-
-
     })
+
+    console.log(matchingPairs.filter((r={},a=>!(r[a]=++r[a]|0))));
+    
   })
 }
 
